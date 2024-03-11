@@ -15,11 +15,22 @@ export const TaskRouter = createTRPCRouter({
             taskName: z.string(),
         }))
         .mutation(async ({ ctx, input }) => {
-            await  ctx.db.task.create({
+            await ctx.db.task.create({
                 data: {
                     taskName: input.taskName
                 }
             })
         }),
+    getAllTasks: publicProcedure
+        .query(async ({ ctx }) => {
+
+            try {
+                const data = await ctx.db.task.findMany()
+                return data
+            } catch (error) {
+                console.log(error)
+            }
+
+        })
 
 })

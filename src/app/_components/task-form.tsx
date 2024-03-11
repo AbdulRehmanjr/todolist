@@ -13,6 +13,8 @@ export const TaskForm = () => {
 
     const addTask = () => {
         createTask.mutate({ taskName: task })
+        setTask(()=>'')
+        window.location.reload()
     }
 
     return (
@@ -21,7 +23,7 @@ export const TaskForm = () => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setTask(e.target.value)}
                 className="text-gray-900 p-2 rounded-l-md" />
             <button title="add-task-button" className="text-white bg-green-700 p-2 rounded-r-md" onClick={() => addTask()} disabled={createTask.isLoading}>
-                Add Task
+                {createTask.isLoading ? "Adding":"Add Task"}
             </button>
         </>
     )
