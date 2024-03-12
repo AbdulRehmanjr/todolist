@@ -12,3 +12,12 @@ model Task {
     taskName String
     isDone   Boolean @default(false)
 }
+
+model Student {
+    userId    String  @id @default(uuid())
+    name      String
+    age       Int
+    phone     String
+    address   String
+    isPresent Boolean @default(true)
+}
