@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-'use client'; 
+'use client'; // ChatGPT code: Importing TRPC client
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,13 +13,13 @@ type FormProps = {
     address: string;
 };
 
-export const TaskHookForm = () => {
+export const StudentHookForm = () => {
     const createStudent = api.student.createStudent.useMutation();
 
     const { handleSubmit, register, formState: { errors } } = useForm<FormProps>();
 
     const formSubmitted = (data: FormProps) => {
-        createStudent.mutate(data); // Mutating  data to create student
+        createStudent.mutate({name:data.name, age:+data.age, phone:data.phone,address:data.address});  
     };
 
     return (

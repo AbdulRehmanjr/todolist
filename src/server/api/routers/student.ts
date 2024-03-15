@@ -36,7 +36,52 @@ export const StudentRouter = createTRPCRouter({
             return students
         }),
     //* DELETE
+    deleteStudent: publicProcedure
+        .input(z.object({
+            phone: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            const deletedStudent = await ctx.db.student.deleteMany({
+                where: {
+                    phone: input.phone,
+                }
+            });
+            return deletedStudent;
+        }),
     //* UPDATE
+
+    updateStudent: publicProcedure
+    .input(z.object({
+        phone: z.string(),
+        address: z.string(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+        const updatedStudent = await ctx.db.student.updateMany({
+            where: {
+                phone: input.phone,
+            },
+            data: {
+                address: input.address,
+            }
+        });
+        return updatedStudent;
+    }),
     //* FILTERING,SORT GT GTE LT LE HAS CONTAIN ORDERBY 
+    getStudentsByAgeRange: publicProcedure
+        .input(z.object({
+            minAge: z.number(),
+            maxAge: z.number(),
+        }))
+        .query(async ({ ctx, input }) => {
+            const students = await ctx.db.student.findMany({
+                where: {
+                    AND: [
+                        { age: { gte: input.minAge } },
+                        { age: { lte: input.maxAge } }
+                    ]
+                }
+            });
+            return students;
+        }),
     
 })
