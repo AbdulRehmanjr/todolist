@@ -20,6 +20,7 @@ export const TaskRouter = createTRPCRouter({
                     taskName: input.taskName
                 }
             })
+            return "task created successfully"
         }),
     getAllTasks: publicProcedure
         .query(async ({ ctx }) => {
