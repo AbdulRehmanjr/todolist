@@ -14,9 +14,13 @@ type FormProps = {
 };
 
 export const StudentHookForm = () => {
-    const createStudent = api.student.createStudent.useMutation();
+    const createStudent = api.student.createStudent.useMutation({
+        onSuccess: () => {
+            reset()
+        },
+    });
 
-    const { handleSubmit, register, formState: { errors } } = useForm<FormProps>();
+    const { handleSubmit, register, formState: { errors },reset } = useForm<FormProps>();
 
     const formSubmitted = (data: FormProps) => {
         createStudent.mutate({name:data.name, age:+data.age, phone:data.phone,address:data.address});  
@@ -24,6 +28,7 @@ export const StudentHookForm = () => {
 
     return (
         <form className="text-gray-900" onSubmit={handleSubmit(formSubmitted)}>
+            {createStudent.isSuccess && <p className="text-green-600 font-bold text-4xl">Saved</p>}
             <div className="flex flex-col gap-2">
                 <label htmlFor="name">Name</label>
                 <input {...register('name', { required: "Name is required" })} id="name" type="text" className="p-2 border-2" />

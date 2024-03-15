@@ -6,7 +6,7 @@ import { StudentRouter } from "./routers/student";
 
 export const appRouter = createTRPCRouter({
     task:TaskRouter,
-    student:StudentRouter
+    student:StudentRouter,
 });
 
 // export type definition of API
